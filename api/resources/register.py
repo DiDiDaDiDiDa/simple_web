@@ -9,6 +9,11 @@ import uuid
 from flask_restful import Resource, reqparse
 from werkzeug.security import generate_password_hash
 
+from api import api
+from api.common.external_api import res
+from api.models.user import UserModel
+
+
 class Register(Resource):
     def post(self):
         parser = reqparse.RequestParser()
@@ -26,3 +31,10 @@ class Register(Resource):
             except Exception as e:
                 return res(success=False, message="Error: {}".format(e), code=500)
 
+
+def reg_args_valid(parser):
+    parser.add_argument('username', type=str, location='json')
+    parser.add_argument('password', type=str, dest='pwd', location='json')
+
+
+api.add_resource(Register, '/register')

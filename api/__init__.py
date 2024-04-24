@@ -8,10 +8,12 @@ from flask import Blueprint
 
 from api.common.external_api import ExternalApi
 
+from .resources import register,login,logout,user
+
+
 bp=Blueprint('api',__name__, url_prefix='/v1')
 
 api=ExternalApi(bp)
 
-from .resources import Helloworld,user
 
 

@@ -1,26 +1,25 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
-# @FileName :user.py
-# @Time :2024/4/24 11:47
+# @FileName :user.py.py
+# @Time :2024/4/24 14:46
 # @Author :WZY
-import uuid
-
-from flask import request
+from flask_jwt_extended import jwt_required
 from flask_restful import Resource
-from ..models.user import UserModel
 
 from api import api
+from api.common.external_api import res
+from api.models.user import UserModel
 
 
-class User(Resource):
-    def post(self):
-        username=request.json.get('username')
-        pwd=request.json.get('password')
-        salt=uuid.uuid4().hex
-        userModel = UserModel(username= username,pwd= pwd,salt=salt)
-        userModel.addUser()
+class UserService(Resource):
+    @jwt_required()
+    def get(self):
+        userList = UserModel.get_all_user()
+        result = []
+        for user in userList:
+            result.append(user.dict())
 
-        return 'success'
+        return res(data=result)
 
 
-api.add_resource(User, '/user')
+api.add_resource(UserService, '/getUserList')
