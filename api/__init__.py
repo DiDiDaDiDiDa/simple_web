@@ -12,6 +12,6 @@ bp=Blueprint('api',__name__, url_prefix='/v1')
 
 api=ExternalApi(bp)
 
-from .resources import Helloworld
+from .resources import Helloworld,user
 
 

@@ -8,11 +8,11 @@ from api.models import db
 from config import config
 from manage import migrate
 
+
 # 导入环境变量
 load_dotenv(find_dotenv())
 load_dotenv(find_dotenv('.flaskenv'), override=True)
 
-from flask_restful import Api, Resource
 
 
 def create_app(config_name):
@@ -21,6 +21,7 @@ def create_app(config_name):
     db.init_app(app)
     migrate.init_app(app, db)
     app.register_blueprint(bp)
+    print(app.url_map)
     return app
 
 
